@@ -1,59 +1,25 @@
-# PHP CircleCI 2.0 configuration file
-#
-# Check https://circleci.com/docs/2.0/language-php/ for more details
-#
 version: 2
-jobs:
-  build:
-    docker:
-      # Specify the version you desire here
-      - image: circleci/php:7.2-node-browsers
 
-      # Specify service dependencies here if necessary
-      # CircleCI maintains a library of pre-built images
-      # documented at https://circleci.com/docs/2.0/circleci-images/
-      # Using the RAM variation mitigates I/O contention
-      # for database intensive operations.
-      # - image: circleci/mysql:5.7-ram
-      #
-      # - image: redis:2.8.19
+ jobs:
+   build:
+     - checkout
+   deploy:
+     machine:
+       enabled: true
+     steps:
+       - run:
+           name: Deploy Over SSH
+           command: |
+             ssh $SSH_USER@$SSH_HOST "<remote deploy command>"
 
-    steps:
-      - checkout
-
-      - run: sudo apt update # PHP CircleCI 2.0 Configuration File# PHP CircleCI 2.0 Configuration File sudo apt install zlib1g-dev libsqlite3-dev
-      - run: sudo docker-php-ext-install zip
-
-      # Download and cache dependencies
-      - restore_cache:
-          keys:
-            # "composer.lock" can be used if it is committed to the repo
-            - v1-dependencies-{{ checksum "composer.json" }}
-            # fallback to using the latest cache if no exact match is found
-            - v1-dependencies-
-
-      - run: composer install -n --prefer-dist
-
-      # run tests with phpunit or codecept
-      #- run: ./vendor/bin/phpunit
-      
-#  deploy:
-#    docker:
-#      - image: circleci/php:7.2-node-browsers
-#    steps:
-#      - run: |
-#          sudo apt-get update;
-#          sudo apt-get install lftp;
-#      - run: echo $USER
-#      - run: echo $user
-#      - run: echo $USERNAME
-#      - run: echo $username
-#      - checkout
-#      - run: lftp -c "set sftp:auto-confirm yes; open -u $username,$password sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
-#        
-#workflows:
-#  version: 2
-#  build-and-deploy:
-#    jobs:
-#      - build
-#      - deploy
+ workflows:
+   version: 2
+   build-and-deploy:
+     jobs:
+       - build
+       - deploy:
+           requires:
+             - build # only deploy once build job has completed
+           filters:
+             branches:
+               only: master # only deploy on the master branch
