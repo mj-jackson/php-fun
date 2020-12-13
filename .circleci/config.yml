@@ -5,6 +5,11 @@ jobs:
       - image: circleci/php:7.2-node-browsers
     steps:
       - run:
+          name: check stuff
+          command: |
+            echo $SSH_USER
+            echo $SSH_HOST
+      - run:
           name: Deploy Over SSH
           command: |
             ssh $SSH_USER@$SSH_HOST
