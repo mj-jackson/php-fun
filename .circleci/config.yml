@@ -40,11 +40,16 @@ jobs:
   deploy:
     docker:
       - image: circleci/php:7.2-node-browsers
-    branches:
-      only: master
     steps:
       - run: |
           sudo apt-get update;
           sudo apt-get install lftp;
       - checkout
       - run: lftp ftp://USERNAME:PASSWORD@HOSTNAME -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./ ./wp-content/themes/; quit"
+        
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy
