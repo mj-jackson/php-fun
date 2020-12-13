@@ -36,3 +36,29 @@ jobs:
 
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
+      
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - run:
+        name: Install FTP
+        command: |
+          sudo apt-get update;
+          sudo apt-get install lftp;
+      - checkout
+      - run:
+        name: Send via FTP
+        command: lftp ftp://USERNAME:PASSWORD@HOSTNAME -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./ ./wp-content/themes/; quit"
+        
+workflows:
+  version: 2
+  build-and-deploy:
+    jobs:
+      - build
+      - deploy:
+        requires:
+          - build
+        filters:
+          branches:
+            only: master
