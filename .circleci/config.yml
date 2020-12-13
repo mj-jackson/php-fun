@@ -47,8 +47,9 @@ jobs:
       - run: echo $USER
       - run: echo $user
       - run: echo $USERNAME
+      - run: echo $username
       - checkout
-      - run: lftp -c "set sftp:auto-confirm yes; open -u nonameg_0,La2nVbQz8Ri45BQ2 sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
+      - run: lftp -c "set sftp:auto-confirm yes; open -u $username,$password sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
         
 workflows:
   version: 2
