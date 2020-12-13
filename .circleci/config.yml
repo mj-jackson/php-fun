@@ -45,7 +45,7 @@ jobs:
           sudo apt-get update;
           sudo apt-get install lftp;
       - checkout
-      - run: lftp ftp://USERNAME:PASSWORD@HOSTNAME -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./ ./wp-content/themes/; quit"
+      - run: lftp -u USERNAME,PASSWORD -p 22 -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./ .; quit" sftp://www262.your-server.de
         
 workflows:
   version: 2
