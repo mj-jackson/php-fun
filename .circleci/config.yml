@@ -45,7 +45,7 @@ jobs:
           sudo apt-get update;
           sudo apt-get install lftp;
       - checkout
-      - run: lftp -u USERNAME,PASSWORD -p 22 -e "mirror -v -R --exclude .git/ --exclude .circleci/ ./ .; quit" sftp://www262.your-server.de
+      - run: lftp -c "set sftp:auto-confirm yes; open -u USERNAME,PASSWORD sftp://www262.your-server.de ; mirror -e -v -R --exclude .git/ --exclude .circleci/ ./ .; quit"
         
 workflows:
   version: 2
