@@ -12,5 +12,5 @@ jobs:
       - run:
           name: Deploy Over SSH
           command: |
-            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null . landes-hub.de@ssh.strato.de:/sites/test/
+            scp -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -v ./ landes-hub.de@ssh.strato.de:/sites/test/
             #ssh -o "StrictHostKeyChecking no" landes-hub.de@ssh.strato.de "pwd ; touch test.txt ;"
