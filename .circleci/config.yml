@@ -44,6 +44,9 @@ jobs:
       - run: |
           sudo apt-get update;
           sudo apt-get install lftp;
+      - run: echo $USER
+      - run: echo $user
+      - run: echo $USERNAME
       - checkout
       - run: lftp -c "set sftp:auto-confirm yes; open -u nonameg_0,La2nVbQz8Ri45BQ2 sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
         
