@@ -7,7 +7,9 @@ jobs:
       - add-ssh-keys:
           fingerprints:
             - "21:50:af:56:cb:8a:d8:22:27:90:6b:f2:8c:1f:23:8a"
+      - checkout
       - run:
           name: Deploy Over SSH
           command: |
-            ssh -o "StrictHostKeyChecking no" landes-hub.de@ssh.strato.de "pwd ; touch test.txt ;"
+            scp . landes-hub.de@ssh.strato.de:/sites/test/
+            #ssh -o "StrictHostKeyChecking no" landes-hub.de@ssh.strato.de "pwd ; touch test.txt ;"
