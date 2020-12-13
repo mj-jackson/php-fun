@@ -37,23 +37,23 @@ jobs:
       # run tests with phpunit or codecept
       #- run: ./vendor/bin/phpunit
       
-  deploy:
-    docker:
-      - image: circleci/php:7.2-node-browsers
-    steps:
-      - run: |
-          sudo apt-get update;
-          sudo apt-get install lftp;
-      - run: echo $USER
-      - run: echo $user
-      - run: echo $USERNAME
-      - run: echo $username
-      - checkout
-      - run: lftp -c "set sftp:auto-confirm yes; open -u $username,$password sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
-        
-workflows:
-  version: 2
-  build-and-deploy:
-    jobs:
-      - build
-      - deploy
+#  deploy:
+#    docker:
+#      - image: circleci/php:7.2-node-browsers
+#    steps:
+#      - run: |
+#          sudo apt-get update;
+#          sudo apt-get install lftp;
+#      - run: echo $USER
+#      - run: echo $user
+#      - run: echo $USERNAME
+#      - run: echo $username
+#      - checkout
+#      - run: lftp -c "set sftp:auto-confirm yes; open -u $username,$password sftp://www262.your-server.de ; mirror -e -R -p ./ .; quit"
+#        
+#workflows:
+#  version: 2
+#  build-and-deploy:
+#    jobs:
+#      - build
+#      - deploy
