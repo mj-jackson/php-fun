@@ -7,6 +7,7 @@ jobs:
       - add-ssh-keys:
           fingerprints:
             - "21:50:af:56:cb:8a:d8:22:27:90:6b:f2:8c:1f:23:8a"
+      - run: sudo apt-get rsync
       - checkout
       - run: ls -al
       - run: composer install
