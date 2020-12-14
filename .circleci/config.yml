@@ -9,8 +9,10 @@ jobs:
             - "21:50:af:56:cb:8a:d8:22:27:90:6b:f2:8c:1f:23:8a"
       - checkout
       - run: ls -al
+      - run: composer install
       - run:
           name: Deploy Over SSH
           command: |
             #scp -o StrictHostKeyChecking=no -r ./ landes-hub.de@ssh.strato.de:/sites/test/ && echo "success!"
-            ssh -o "StrictHostKeyChecking no" landes-hub.de@ssh.strato.de "cd gittest ; git clone git@test.github.com:mj-jackson/php-fun ;"
+            #ssh -o "StrictHostKeyChecking no" landes-hub.de@ssh.strato.de "cd gittest ; git clone git@test.github.com:mj-jackson/php-fun ;"
+            rsync -o "StrictHostKeyChecking no" ./ landes-hub.de@ssh.strato.de:/sites/test/
